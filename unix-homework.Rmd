@@ -54,26 +54,26 @@ pwd
 # Use echo to print `my name is ----` to stdout.  Where `----` is replaced by your name
 
 ```{bash}
-echo "my name is Eric"
+echo "my name is Taylor"
 ```
 
 
 # now, really, answer the above question as yourself
 
 ```{bash}
-
+echo "my name is Taylor"
 ```
 
 # print the absolute path of the top level of the homework directory where this is
 
 ```{bash}
-
+ls -d ~/GenomicsClassProjects/unix-play-with-genomic-data-taylorbobowski/
 ```
 
 # list, in long format, all the files and directories in this homework directory
 
 ```{bash}
-
+ls -l ~/GenomicsClassProjects/unix-play-with-genomic-data-taylorbobowski/
 ```
 
 Note that some of the file names might look garbled in the Rmarkdown output.  This
@@ -83,19 +83,19 @@ colorizing `ls` output.
 # There is a directory called `.git` in here that didn't get listed. List everything again, but make sure `.git` is in the output
 
 ```{bash}
-
+ls -a -l 
 ```
 
 # What are the other hidden files/directories that show up in the above listing? Just list them in the fenced text block below
 
 ```
-
+.gitignore, .git, ., .., and .Rproj.user
 ```
 
 # List (long format) the contents of the directory `.git`
 
 ```{bash}
-
+ls -l .git
 ```
 
 # if you wanted to type `ls fastq/DPCh_plate1_A06_S6.R1.fq.gz` on the command line, what is the fewest keystrokes that can get you `fastq/DPCh_plate1_A06_S6.R1.fq.gz` using TAB completion?
@@ -103,37 +103,40 @@ colorizing `ls` output.
 I did it in 10 (counting TABs)...
 
 ```
-
+10, not counting ls space
 ```
 
 # make a new directory called `lonely-fastqs`, and inside of that, two directories R1 and R2
 
 ```{bash}
-
+mkdir lonely-fastqs
+mkdir lonely-fastqs/R{1,2}
 ```
 
 # Copy (not move) all the read1 (`R1`) fastq files in `fastqs` into `lonely-fastqs/R1` and all the read2 fastqs into `lonely-fastqs/R2`. When you are done, on the next line in the code block, list the contents of `lonely-fastqs/R1` and `lonely-fastqs/R2`
 
 ```{bash}
-
+cp fastq/DPCh_plate1_???_S??.R1.fq.gz lonely-fastqs/R1
+cp fastq/DPCh_plate1_???_S??.R2.fq.gz lonely-fastqs/R2
 ```
 
 # do a recursive, short listing of the contents of `lonely-fastqs`
 
 ```{bash}
-
+ls -R lonely-fastqs/
 ```
 
 # Use the recursive (-r) option to remove `lonely-fastqs` and its contents
 
 ```{bash}
-
+rm -r lonely-fastqs/
 ```
 
 # Make two new directories in the top level of the repo called `fq_AB` and `fq_notAB`
 
 ```{bash}
-
+mkdir fq_AB
+mkdir fq_notAB
 ```
 
 If you get an error because you already created those directories, that is OK
@@ -142,176 +145,189 @@ directories are there, it's all good...
 # Using the `[` `]` copy the R1 files in `fastqs` that belong to sample names (the part immediately after `DPCh_plate1_`) starting with an `A` or `B` to `fq_AB`.  
 
 ```{bash}
-
+cp fastq/DPCh_plate1_[A-B]* fq_AB/
 ```
 
 # Now, using negation (`^`) with `[` and `]` copy all the R1 files that don't belong to sample names starting with an `A` or a `B` to `fq_notAB`. When you are done, on the next line in the code block, list the contents of `fq_AB` and `fq_notAB`. 
 
 ```{bash}
-
+cp fastq/DPCh_plate1_[^A-B]* fq_notAB/
 ```
 
 # Remove `fq_AB` and `fq_notAB`, and their contents
 
 ```{bash}
-
+rm -r fq_*
 ```
 
 # Using the `{,}` construct create five directories named `dir_A`, `dir_C`, `dir_E`, `dir_G`, and `dir_I`, and list them (but not their contents) when you are done
 
 ```{bash}
-
+mkdir dir_{A,C,E,G,I}
+ls dir_{a,C,E,G,I}
 ```
 
 # Using globbing, remove `dir_A`, `dir_C`, `dir_E`, `dir_G`, and `dir_I`, using a command with 8 characters (including spaces)
 
 ```{bash}
-
+rm -r d*
 ```
 
 # Create a directory called `nice_dir_name` and then use `echo`, redirecting its output to create a file called `nice_file_name` inside of `nice_dir_name` whose contents is the string `A string in a file!`
 
 ```{bash}
-
+mkdir nice_dir_name
+echo "A string in a file!" > nice_dir_name/nice_file_name
 ```
 
 # Catenate the contents of `nice_dir_name/nice_file_name` to _stdout_
 
 ```{bash}
-
+cat nice_dir_name/nice_file_name
 ```
 
 # Create a directory called `bad directory name with spaces`, and then, with redirection, create a file inside it, named `bad file name with spaces` whose contents are the string `Whoa! No spaces, please!`.  Use backslash escaping instead of quoting
 
 ```{bash}
-
+mkdir bad\ directory\ name\ with\ spaces
+echo "whoa! No spaces, please!" > bad\ directory\ name\ with\ spaces
+/bad\ file\ name\ with\ spaces
 ```
 
 # Catenate the contents of `bad directory name with spaces/bad file name with spaces`
 
 ```{bash}
-
+cat bad\ directory\ name\ with\ spaces/bad\ file\ name\ with\ spaces
 ```
 
 # list the directories (just the names, not the contents (`-d`)) `bad directory name with spaces` and `nice_dir_name`.
 
 ```{bash}
-
+ls -d bad\ directory\ name\ with\ spaces nice_dir_name
 ```
 
 # Once you are convinced that you can list the directories correctly in your terminal, recall that `ls` command and replace `ls` with `rm -r` to remove them
 
 ```{bash}
-
+rm -r bad\ directory\ name\ with\ spaces nice_dir_name
 ```
 
 # Why is it a good idea to `ls` things before removing them?
 
 ```
-
+To double check that you are removing the correct thing, or that you are not accidentally removing something you want to keep.
 ```
 
 # If you had just typed `rm -r bad directory name with spaces` what would Unix have tried to remove?
 
 ```
-
+Directories with names bad, directory, name, with, and spaces; or in this case, nothing at all
 ```
 
 # There are bam, sam, and fastq files, in the appropriately named directories for sample `A05_S5`. Make a directory named `A05_S5` and copy all those files into that new directory.  List the directory when you are done.
 
 ```{bash}
-
+mkdir A05_S5
+cp sam/DPCh_plate1_A05_S5.sam bam/DPCh_plate1_A05_S5.bam fastq/DPCh_
+plate1_A05_S5.R* A05_S5/
 ```
 
 # remove the directory `A05_S5` and its contents
 
 ```{bash}
-
+ rm -r A05_S5/
 ```
 
 # Use `ls` to try to list the file `it_aint_here`
 
 ```{bash}
-
+ls it_aint_here
 ```
 
 # Now, do the same thing but redirect _stderr_ into a file called `my_bad.txt`, and then catenate the contents of that file, and then remove it
 
 ```{bash}
-
+ls it_aint_here 2> my_bad.txt
+cat my_bad.txt
+rm my_bad.txt
 ```
 
 # The files in `fastq` are text files, but they are all gzipped.  Using `gzcat` and a pipe, view the first 8 lines of `fastq/DPCh_plate1_C11_S35.R1.fq.gz`
 
 ```{bash}
-
+zcat fastq/DPCh_plate1_C11_S35.R1.fq.gz | head -n 8
 ```
 
 # Do the same to see the first 8 lines of `fastq/DPCh_plate1_C11_S35.R2.fq.gz`
 
 ```{bash}
-
+zcat fastq/DPCh_plate1_C11_S35.R2.fq.gz | head -n 8
 ```
 
 # What do you notice about the names of the two reads in each file (Lines 1 and 5, that start with a `@`)
 
 ```
-
+They are identical, but R1 ends with 1 and R2 ends in 2
 ```
 
 
 # Print the date, redirect it to a file called `now.txt`, catenate that file to _stdout_ and then remove it
 
 ```{bash}
-
+date > now.text
+cat now.text
+rm now.text
 ```
 
 # Count the number of lines/words/characters (using `wc`) in the two SAM files in the `sam` directory
 
 ```{bash}
-
+wc sam/*.sam
 ```
 
 # Note that gzcat will decompress all files you give it and send the output to _stdout_.  Knowing this, count how many lines are in all the `R1` files in `fastq` (after decompressing them into text files), and also count up all the lines in the `R1` files in `fastq`.  Note they should be the same.
 
 ```{bash}
-
+zcat fastq/*R1* | wc
+zcat fastq/*R2* | wc
 ```
 
 # Now, gzcat all the `R1` files in `fastq` and redirect that to a file called `R1_all_via_gzcat.fq` in the top directory of the repo
 
 ```{bash}
-
+zcat fastq/*R1* > R1_all_via_gzcat.fq
 ```
 
 # People are usually familiar with using `cat` to catenate text files.  It turns out that you can also catenate `gzip` compressed files.  The result is another properly gzipped file that can be decompressed.  Catenate all the gzipped `R1` files in `fastq` into a single (still gzipped) file called `R1_all_via_cat.fq.gz`
 
 ```{bash}
-
+cat fastq/*R1* > R1_all_via_cat.fq.gz
 ```
 
 # Copy `R1_all_via_cat.fq.gz` to `copy_of_R1_all_via_cat.fq.gz`
 
 ```{bash}
-
+cp R1_all_via_cat.fq.gz copy_of_R1_all_via_cat.fq.gz
 ```
 
 # Now, decompress `R1_all_via_cat.fq.gz` into `R1_all_via_cat.fq`
 
 ```{bash}
-
+zcat R1_all_via_cat.fq.gz > R1_all_via_cat.fq
 ```
 
 # Compute the SHA1 hashes of `R1_all_via_cat.fq` and `R1_all_via_gzcat.fq` to confirm they are identical
 
 ```{bash}
-
+sha1sum R1_all_via_cat.fq
+sha1sum R1_all_via_gzcat.fq
 ```
 
 # But now, gzip `R1_all_via_gzcat.fq` and compare the result to `copy_of_R1_all_via_cat.fq.gz` by computing the SHA1 hash of each
 
 ```{bash}
-
+sha1sum R1_all_via_cat.fq.gz
+sha1sum copy_of_R1_all_via_cat.fq.gz
 ```
 
 Note that this shows that, although the compressed files are not identical, their contents (once decompressed, are identical).
@@ -319,32 +335,34 @@ Note that this shows that, although the compressed files are not identical, thei
 # using `du` with the `-h` (i.e. "human readable" option) print the file sizes of `R1_all_via_cat.fq` and `copy_of_R1_all_via_cat.fq.gz`.
 
 ```{bash}
-
+du -h R1_all_via_cat.fq
+du -h copy_of_R1_all_via_cat.fq.gz
 ```
 
 # By what factor (approximately) does the compression save storage space on your disk?
 
 ```
-
+Around 4, if i did my math right
 ```
 
 # Remove all files starting with `R1_all` and `copy_of_R1`
 
 ```{bash}
-
+rm R1_all* copy_of_R1*
 ```
 
 # Now, print the file sizes (with `du -h`, again) of the files in `bam` to the files in `sam`
 
 ```{bash}
-
+du -h bam
+du -h sam
 ```
 
 
 # Print the last 15 lines of `sam/DPCh_plate1_A05_S5.sam` to _stdout_
 
 ```{bash}
-
+tail -n 15 sam/DPCh_plate1_A05_S5.sam
 ```
 
 If it all looks like gibberish to you, despair not!  You will be super familiar with
@@ -354,27 +372,30 @@ this file format within a couple of weeks from now.
 # Print the _first_ 15 lines of `sam/DPCh_plate1_A05_S5.sam` to _stdout_
 
 ```{bash}
-
+head -n 15 sam/DPCh_plate1_A05_S5.sam
 ```
 
 # Catenate the file `count_files.sh` to _stdout_
 
 ```{bash}
-
+cat count_files.sh
 ```
 
 # Note that `count_files.sh` is a short shell script. Try to execute it with `./count_files.sh`
 
 ```{bash}
-
+./count_files.sh
 ```
 
 Aha! You should have gotten a permission denied error.  99% of the time that occurs because
 the file is not user-executable.
 
+I did not get that error!!!!
+
 # List (long) `count_files.sh` to see what the permissions are, and then add execute (`x`) permissions to users and groups with the "add-or-subtract permissions syntax" of `chmod`, then long list it again
 
 ```{bash}
+ls -l count_files.sh
 
 ```
 
